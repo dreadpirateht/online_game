@@ -1,0 +1,1 @@
+print(repr(type(' ').__name__))

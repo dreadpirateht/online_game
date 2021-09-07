@@ -1,0 +1,8 @@
+9/6/21:
+Started programing server and network files, working to send and recieve strings
+
+Todo
+1. change strings to arbitrary data types using pickle, and create a transfer protocol using a header first
+2. create a data packet object within the network file that will store the data, as well as whether or not it has been read
+3. implement a reconnect feature in the network object
+4. add tables to be assigned to in the server file
