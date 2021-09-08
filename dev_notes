@@ -6,3 +6,14 @@ Todo
 2. create a data packet object within the network file that will store the data, as well as whether or not it has been read
 3. implement a reconnect feature in the network object
 4. add tables to be assigned to in the server file
+
+
+Finished 1 and 2 on list above, started implementing 3 by adding a reconnect, disconnect and soft disconnect method
+to the Network class. Also, made a bunch of progress on the server side by refactoring into a class and created a
+method to deal with parsing server and table commands.
+
+9/7/21:
+Added project to a git repository on github, and cloned repository to laptop as well. First coding task is to make test
+files for the server and network for both the laptop and home comp.
+
+Files will be added to a server file in the scripts folder

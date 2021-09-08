@@ -1,7 +1,7 @@
 import socket
 from threading import Thread
-from scripts.network import Network, Packet
-from copy import deepcopy
+from scripts.network.network import Network
+
 
 class Server:
     def __init__(self, server, port):
@@ -74,6 +74,6 @@ def print_periodically(network):
         print('sending: instructions from server')
         network.send('instructions from server')
 
-s = Server('192.168.1.139', 5555)
-s.start()
+#s = Server('192.168.1.139', 5555)
+#s.start()
 
