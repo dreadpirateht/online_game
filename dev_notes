@@ -17,3 +17,11 @@ Added project to a git repository on github, and cloned repository to laptop as 
 files for the server and network for both the laptop and home comp.
 
 Files will be added to a server file in the scripts folder
+
+Started adding the ability for the server and network to send commands to each other so we can reconnect and disconnect
+properly
+
+9/10/21:
+Finished getting the server to accept server commands, added a disconnect command that properly disconnects a client
+going to add a soft disconnect that puts the client on an idle list, and a reconnect that allows them to restablish a
+connection with the server.

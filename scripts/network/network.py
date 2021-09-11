@@ -91,7 +91,6 @@ class Network:
             print('Error Reconnecting to server: ', e)
 
     def disconnect(self):
-        self.send('ServerCMD Disconnect')
         self.is_connected = False
         self.connection.close()
         print('Disconnected from server')
@@ -100,6 +99,13 @@ class Network:
         self.is_connected = False
         self.connection.close()
         print('Soft Disconnected from server')
+
+    def clear_read_packets(self):
+        new_recv_list = []
+        for packet in self.recv_data:
+            if not packet.is_read:
+                new_recv_list.append(packet)
+        self.recv_data = new_recv_list
 
 
 class Packet:
