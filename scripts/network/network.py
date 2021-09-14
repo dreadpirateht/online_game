@@ -1,9 +1,11 @@
 """
 This file will house a network class that will make connections between a server and clients
 """
+
 import socket
 from threading import Thread
 from pickle import dumps, loads
+from time import time
 
 
 class Network:
@@ -11,6 +13,8 @@ class Network:
         self.HEADER_LENGTH = 128
         self.packet_id = 0
         self.is_client = is_client
+        self.full_disconnect = False
+        self.timed_out = False
         self.host = host
         self.port = port
         self.connection = connection
@@ -78,15 +82,13 @@ class Network:
         header += b' ' * (self.HEADER_LENGTH - len(header))  # pad the header with blank bytes for the rest of the len
         return header, enc_msg
 
-    def reconnect(self):
+    def reconnect(self, old_network):
         try:
-            print('Attempting to recconnect to server')
-            self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.connection.connect(self.addr)
-            print('New server connection established')
-            self.send(('ServerCMD Reconnect', self.id))
-            print('Successfully recconected to server')
-            self.is_connected = True
+            print('Attempting to reconnect to server via connection ID:', old_network.id)
+            self.id = old_network.id
+            self.recv_data = old_network.recv_data
+            self.packet_id = old_network.packet_id
+            print('Successfully reconnected to server')
         except socket.error as e:
             print('Error Reconnecting to server: ', e)
 
@@ -106,6 +108,12 @@ class Network:
             if not packet.is_read:
                 new_recv_list.append(packet)
         self.recv_data = new_recv_list
+
+    def start_idle_timer(self, sec_to_be_idle):
+        start_time = time()
+        while not self.timed_out:
+            if time() - start_time > sec_to_be_idle:
+                self.timed_out = True
 
 
 class Packet:

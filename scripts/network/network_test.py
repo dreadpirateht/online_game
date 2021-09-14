@@ -8,4 +8,3 @@ while True:
     cmd = input('Command to send to server: ')
     n.send(cmd)
     sleep(2)
-    print(n.recv_data)

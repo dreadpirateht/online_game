@@ -25,3 +25,8 @@ properly
 Finished getting the server to accept server commands, added a disconnect command that properly disconnects a client
 going to add a soft disconnect that puts the client on an idle list, and a reconnect that allows them to restablish a
 connection with the server.
+
+9/13/21:
+Finished with the soft disconnect and reconnect server command handling, need to add an idle timer to the network
+class as well as a threaded method to the server class which removes networks from the idle list. Then need to implement
+a table class to start games between groups of clients.
