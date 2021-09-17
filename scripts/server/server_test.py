@@ -7,3 +7,4 @@ import socket
 ip = socket.gethostbyname(socket.gethostname())
 
 server = Server(ip, 5555)
+server.start()
