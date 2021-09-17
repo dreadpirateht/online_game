@@ -5,6 +5,7 @@ from time import sleep
 ip = socket.gethostbyname(socket.gethostname())
 n = Network(ip, 5555)
 while True:
-    cmd = input('Command to send to server: ')
-    n.send(cmd)
+    dat_type = input('Data Type of command to send to server: ')
+    data = input('Data to send to server')
+    n.send(data, data_type=dat_type)
     sleep(2)

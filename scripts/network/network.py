@@ -39,9 +39,9 @@ class Network:
         except socket.error as e:
             print(e)
 
-    def send(self, data):
+    def send(self, data, data_type='Misc'):
         try:
-            header, enc_data = self.get_encoded_header_and_msg(data)
+            header, enc_data = self.get_encoded_header_and_msg(data, data_type=data_type)
             self.connection.send(header)
             self.connection.send(enc_data)
 
@@ -71,10 +71,10 @@ class Network:
                     print('Client id %s disconnected' % self.id)
         self.connection.close()
 
-    def get_encoded_header_and_msg(self, data_to_send):
+    def get_encoded_header_and_msg(self, data_to_send, data_type='Misc'):
         # first place data into a packet object
         self.packet_id += 1
-        packet = Packet(data_to_send, self.packet_id)
+        packet = Packet(data_to_send, self.packet_id, packet_data_type=data_type)
         # next encode the message and then create an encoded header
         enc_msg = dumps(packet)
         msg_len = len(enc_msg)  # integer len of the encoded message
@@ -95,6 +95,7 @@ class Network:
     def disconnect(self):
         self.is_connected = False
         self.connection.close()
+        self.full_disconnect = True
         print('Disconnected from server')
 
     def soft_disconnect(self):
@@ -117,10 +118,11 @@ class Network:
 
 
 class Packet:
-    def __init__(self, data, packet_id):
+    def __init__(self, data, packet_id, packet_data_type='Misc'):
         self.data = data
         self.id = packet_id
         self.is_read = False
+        self.data_type = packet_data_type
 
     def get_data(self):
         self.is_read = True

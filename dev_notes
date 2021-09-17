@@ -30,3 +30,33 @@ connection with the server.
 Finished with the soft disconnect and reconnect server command handling, need to add an idle timer to the network
 class as well as a threaded method to the server class which removes networks from the idle list. Then need to implement
 a table class to start games between groups of clients.
+
+9/16/21:
+Added a timeout method for idle/soft disconnected network objects to the server so that a reconnect can't be made
+after a certain time. Attached to server, and debugged the three server commands Reconnect, Disconnect, SoftDisconnect.
+
+Decided that it makes sense to refactor the Packet class to contain a data type attribute. This way we dont need to do
+a bunch of weird parsing of the packet data to see how to handle the packet. Steps should be as follows
+
+1. Add data type to Packet class
+
+2a. Refactor Network.send to take the optional parameter packet_data_type
+
+2. Refactor the handle incoming data method of the server class to deal with changes
+
+3. Refactor the network test file to take the data type as input first then create the packet to send
+
+Finished the refactoring process, and debugged everything.
+
+Still concerned that the network.recv_data list is not clearing properly on the server side, will check.
+A few lines of code revealed that the list is not clearing properly, so we need to change things. I changed
+the code around, it appears to work correctly, except twice I did not get a packet sent from the client network, but
+This was out of 20 tests, and I think it was a glitch from the client not sending not the server not recieving.
+
+Next, I need to add server log and server stop methods and replace the print statements with log calls
+Log method is added and seems to be working
+stop method was added, but no need to debug now
+
+Next step is to create a Table class as well as a Table_Server class to allow the implementation of placing clients at
+tables. The Table Server will simply inherit from server and have additional code to deal with the changes.
+
